@@ -13,7 +13,7 @@
 
 El proyecto utiliza datos reales del **Gobierno de la República Argentina** (Municipios) para simular la ubicación física de la infraestructura.
 
-### 🚀 Características Principales
+### Características Principales
 
 * **Arquitectura MVC:** Separación clara entre Modelos, Lógica de Negocio (Servicio) y Controladores (API).
 * **API RESTful con FastAPI:** Alto rendimiento y documentación automática (Swagger UI).
