@@ -30,7 +30,7 @@ def get_nodes() -> List[Node]:
     
     for item in raw_data:
         # Validamos y convertimos cada diccionario del JSON a un objeto Node
-        # Si el JSON tiene campos extra, Pydantic los ignora si así se configura, aca los campos coinciden (id, nombre, provincia, centroide)
+        # Si el JSON tiene campos extra, Pydantic los ignora si así se configura, aca los campos coinciden
         # El campo 'status' tomará su valor por defecto ('online').
         node = Node(**item) 
         nodes.append(node)

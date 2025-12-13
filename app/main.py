@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Query, Depends, status 
 from typing import List
 from app.models import Node
-from app import service, auth # Importamos nuestro nuevo módulo de seguridad
+from app import service, auth 
 from app.rate_limiter import RateLimiter
 
 app = FastAPI(
