@@ -1,9 +1,5 @@
 # ISP Node Manager
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.95%2B-009688?style=for-the-badge&logo=fastapi)
-![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
-
 > **Proyecto Final - Redes de Datos (Tecnicatura en IA)**  
 > Simulación de un sistema de gestión de infraestructura de red (Cliente-Servidor).
 
