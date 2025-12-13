@@ -3,11 +3,11 @@ import json
 import os
 import sys
 
-# URL oficial del dataset
+# URL del dataset
 DATA_URL = "https://infra.datos.gob.ar/catalog/modernizacion/dataset/7/distribution/7.4/download/municipios.json"
 
-# Ruta donde guardaremos la "Base de Datos"
-# Usamos rutas relativas para que funcione en cualquier OS
+
+# rutas relativas para que funcione en cualquier OS
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 OUTPUT_FILE = os.path.join(DATA_DIR, "nodes.json")
@@ -23,12 +23,10 @@ def fetch_and_analyze_data():
     
     try:
         response = requests.get(DATA_URL)
-        response.raise_for_status() # Lanza error si no es 200 OK
+        response.raise_for_status() # error si no es 200 OK
         
         data = response.json()
         
-        # El JSON de gobierno suele venir envuelto en una clave raíz, a veces 'municipios'
-        # Vamos a verificar eso.
         lista_municipios = data.get('municipios', [])
         total = data.get('cantidad', 0)
 
@@ -38,7 +36,7 @@ def fetch_and_analyze_data():
             print("Alerta: La lista de municipios parece vacía o el formato cambió.")
             return
 
-        # Análisis de Estructura (Schema Discovery)
+        # Análisis de Estructura
         print("\n---ANÁLISIS DE ESTRUCTURA (Primer Elemento) ---")
         primer_nodo = lista_municipios[0]
         print(json.dumps(primer_nodo, indent=4, ensure_ascii=False))
