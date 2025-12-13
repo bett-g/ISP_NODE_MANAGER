@@ -2,7 +2,23 @@ import requests
 import sys
 import getpass
 
-API_URL = "http://localhost:8000"
+DEFAULT_URL = "http://localhost:8000"
+
+print("--- CONFIGURACIÓN DE RED ---")
+target_ip = input(f"Ingrese IP del Servidor (Enter para usar {DEFAULT_URL}): ").strip()
+
+if target_ip:
+    # Si el user escribió algo, asumimos que puso la IP.
+    # Agregamos "http://" si se le olvidó y el puerto 8000
+    if not target_ip.startswith("http"):
+        API_URL = f"http://{target_ip}:8000"
+    else:
+        API_URL = target_ip
+else:
+    API_URL = DEFAULT_URL
+
+print(f"Conectando a: {API_URL}")
+
 
 def get_credentials():
     print("--- Autenticacion Requerida ---")
@@ -70,7 +86,7 @@ def create_node():
         "id": node_id,
         "nombre": name,
         "provincia": {
-            "id": "00", # Hardcoded as per prompt implication (or user didn't specify asking for ID, just Name, but API needs ID. I'll prompt for 00 or maybe I should ask? Prompt said "Name, Province Name". I will use 00 as placeholder or ask? "Province Name" was requested. I will default ID to "00" as example showed "id": "00")
+            "id": "00", #HC
             "nombre": prov_name
         },
         "centroide": {

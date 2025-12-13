@@ -35,7 +35,7 @@ def get_node_by_id(node_id: str):
     """Busca un nodo específico por su ID."""
     all_nodes = service.get_nodes()
     
-    # Búsqueda lineal (en una DB real usaríamos SQL WHERE)
+    # Búsqueda lineal
     for node in all_nodes:
         if node.id == node_id:
             return node

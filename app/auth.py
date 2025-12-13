@@ -10,8 +10,7 @@ ADMIN_PASS = "admin123"
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     """
-    Verifica usuario y contraseña.
-    Si falla, lanza un 401 y detiene la ejecución.
+    Verifica usuario y contraseña, si falla, lanza un 401 y detiene la ejecución.
     """
     # Usamos compare_digest para evitar ataques de tiempo (Timing Attacks)
     is_user_correct = secrets.compare_digest(credentials.username, ADMIN_USER)

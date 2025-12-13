@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_FILE = os.path.join(BASE_DIR, "data", "nodes.json")
 
 def load_data() -> List[dict]:
-    """Lee el JSON crudo del disco."""
+    """Lee el JSON del disco."""
     if not os.path.exists(DATA_FILE):
         return []
     
@@ -23,34 +23,30 @@ def save_data(data: List[dict]):
 def get_nodes() -> List[Node]:
     """
     Obtiene todos los nodos y los convierte al modelo Pydantic 'Node'.
-    Aquí simulamos que todos arrancan 'online' ya que el JSON original no tiene estado.
+    Simulamos que todos arrancan 'online' ya que el JSON original no tiene estado.
     """
     raw_data = load_data()
     nodes = []
     
     for item in raw_data:
         # Validamos y convertimos cada diccionario del JSON a un objeto Node
-        # Si el JSON tiene campos extra, Pydantic los ignora si así se configura,
-        # pero aquí los campos coinciden (id, nombre, provincia, centroide).
+        # Si el JSON tiene campos extra, Pydantic los ignora si así se configura, aca los campos coinciden (id, nombre, provincia, centroide)
         # El campo 'status' tomará su valor por defecto ('online').
         node = Node(**item) 
         nodes.append(node)
         
     return nodes
 
-# ... (imports y funciones anteriores load_data, save_data, get_nodes)
-
 def create_node(new_node: Node) -> Node:
     """Agrega un nuevo nodo a la lista y guarda en disco."""
     nodes = get_nodes()
     
-    # Validación de unicidad: No queremos IDs repetidos
+    # Validcion de duplicados
     for node in nodes:
         if node.id == new_node.id:
             raise ValueError(f"El nodo con ID {new_node.id} ya existe.")
     
     # Convertimos el objeto Node a diccionario para guardarlo
-    # model_dump() es el método moderno de Pydantic v2 (o .dict() en v1)
     nodes_data = [n.model_dump() for n in nodes]
     nodes_data.append(new_node.model_dump())
     

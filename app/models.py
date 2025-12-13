@@ -21,8 +21,7 @@ class Node(BaseModel):
     provincia: Province
     centroide: Coordinates
     
-    # Añadimos un campo extra que NO viene en el JSON original
-    # pero que nos sirve para simular el estado de la red.
+    # Añadimos un campo extra que NO viene en el JSON original pero que nos sirve para simular el estado de la red.
     # default="online" significa que si no se envía, se asume online.
     status: str = Field(default="online", description="Estado operativo: online, offline, maintenance")
 
