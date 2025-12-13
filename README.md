@@ -7,7 +7,7 @@
 
 **ISP Node Manager** es una aplicación RESTful diseñada para simular la administración de nodos (antenas/sitios) de un Proveedor de Servicios de Internet. El sistema permite a los administradores de red provisionar, monitorear y decomisionar nodos distribuidos geográficamente.
 
-El proyecto utiliza datos reales del **Gobierno de la República Argentina** (municipios) para simular la ubicación física de la infraestructura.
+El proyecto utiliza datos reales del **Gobierno de la República Argentina** (municipios) con aproximadamente 2000 registros para simular la ubicación física de la infraestructura.
 
 ## Características principales
 
@@ -15,7 +15,7 @@ El proyecto utiliza datos reales del **Gobierno de la República Argentina** (mu
 - **API RESTful con FastAPI:** alto rendimiento y documentación automática (Swagger UI).
 - **Persistencia JSON:** base de datos documental basada en archivos (simulación NoSQL).
 - **Seguridad:** autenticación **HTTP Basic Auth** para operaciones críticas (escritura y borrado).
-- **Rate limiting:** middleware personalizado para protección contra saturación (10 requests por minuto).
+- **Rate limiting:** middleware personalizado para protección contra saturación.
 - **Validación de datos:** uso de **Pydantic** para asegurar la integridad de la información.
 
 ---
@@ -34,7 +34,7 @@ isp-node-manager/
 │   └── cli.py              # Interfaz de usuario CLI
 ├── data/                   # Persistencia
 │   └── nodes.json          # Base de datos (ignorada en git)
-├── scripts/                # Herramientas DevOps
+├── scripts/                # Herramientas de poblado
 │   └── data_loader.py      # ETL inicial de datos
 ├── requirements.txt        # Dependencias
 └── README.md               # Documentación
@@ -55,24 +55,29 @@ pip install -r requirements.txt
 python scripts/data_loader.py
 ```
 
-### 2. Levantar la API (servidor)
+### 2. Levantar la API (servidor área local)
 
 Mantener esta terminal abierta.
 
 ```powershell
-python -m uvicorn app.main:app --reload
+ipconfig
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 - URL base: http://127.0.0.1:8000  
 - Documentación: http://127.0.0.1:8000/docs
+- Configurar o deshabilitar Firewall (red privada y pública).
+
 
 ### 3. Ejecutar el cliente
 
-En una nueva terminal (activar el entorno virtual previamente):
+En la terminal de otra PC (activar el entorno virtual previamente):
 
 ```powershell
 python client/cli.py
 ```
+
+- Utilizar la dirección IPv4 de la PC servidor para acceder a la API desde otro equipo en la red.
 
 ---
 
@@ -90,21 +95,8 @@ Credenciales de administrador:
 | POST   | /nodes          | Crea un nuevo nodo                    | Sí   |
 | DELETE | /nodes/{id}     | Elimina un nodo existente             | Sí   |
 
-**Nota:** la API posee un límite de seguridad de 10 peticiones por minuto por IP. Al superarlo, retorna HTTP 429.
+**Nota:** la API posee un límite de seguridad de 5 peticiones cada 30 segundos por IP. Al superarlo, retorna HTTP 429.
 
 ---
 
-## Ejecución en red local (modo laboratorio)
-
-### Comandos resumidos
-
-```powershell
-ipconfig
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-Notas:
-- Utilizar la dirección IPv4 de la PC servidor para acceder desde otros equipos.
-- Permitir el acceso cuando Windows Firewall solicite autorización (red privada y pública).
-- El servicio escucha en el puerto 8000.
 
