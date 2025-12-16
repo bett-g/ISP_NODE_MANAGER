@@ -42,11 +42,12 @@ isp-node-manager/
 
 ---
 
-## Guía de despliegue rápido (cheat sheet)
+## Guía de despliegue
+Requisitos: Python, venv, git
 
 Seguir los comandos en orden para levantar el entorno completo en Windows (PowerShell).
 
-### 1. Configuración inicial (solo la primera vez)
+### 1. Configuración inicial API
 
 ```powershell
 python -m venv venv
@@ -71,9 +72,12 @@ python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 ### 3. Ejecutar el cliente
 
-En la terminal de otra PC (activar el entorno virtual previamente):
+En la terminal de otra PC:
 
 ```powershell
+python -m venv venv
+.\venv\Scripts\Activate
+pip install -r requirements.txt
 python client/cli.py
 ```
 
